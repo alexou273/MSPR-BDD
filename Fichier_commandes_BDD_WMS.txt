@@ -73,14 +73,14 @@ CREATE TABLE stock(
    FOREIGN KEY(Id_localisation) REFERENCES localisation(Id_localisation)
 );
 
-CREATE TABLE Mouvement(
-   Id_Mouvement INT IDENTITY,
+CREATE TABLE mouvement(
+   Id_mouvement INT IDENTITY,
    quantite INT NOT NULL,
    horodatage DATETIME2 NOT NULL,
    reference_operation VARCHAR(255)  NOT NULL,
    Id_site INT NOT NULL,
    Id_type_mouvement INT NOT NULL,
-   PRIMARY KEY(Id_Mouvement),
+   PRIMARY KEY(Id_mouvement),
    UNIQUE(reference_operation),
    FOREIGN KEY(Id_site) REFERENCES site(Id_site),
    FOREIGN KEY(Id_type_mouvement) REFERENCES type_mouvement(Id_type_mouvement)
