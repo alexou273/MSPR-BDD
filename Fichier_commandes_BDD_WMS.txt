@@ -1,0 +1,103 @@
+CREATE TABLE type_mouvement(
+   Id_type_mouvement INT IDENTITY,
+   code VARCHAR(255)  NOT NULL,
+   libelle VARCHAR(255)  NOT NULL,
+   PRIMARY KEY(Id_type_mouvement),
+   UNIQUE(code)
+);
+
+CREATE TABLE type_site(
+   Id_type_site INT IDENTITY,
+   code VARCHAR(50)  NOT NULL,
+   libelle VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(Id_type_site),
+   UNIQUE(code)
+);
+
+CREATE TABLE type_localisation(
+   Id_type_localisation INT IDENTITY,
+   code VARCHAR(50)  NOT NULL,
+   libelle VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(Id_type_localisation),
+   UNIQUE(code)
+);
+
+CREATE TABLE client(
+   Id_client INT IDENTITY,
+   nom VARCHAR(255)  NOT NULL,
+   code_client VARCHAR(255)  NOT NULL,
+   actif BIT NOT NULL,
+   PRIMARY KEY(Id_client),
+   UNIQUE(code_client)
+);
+
+CREATE TABLE article(
+   Id_article INT IDENTITY,
+   sku VARCHAR(255)  NOT NULL,
+   designation VARCHAR(255) ,
+   poid_kg DECIMAL(15,3)   NOT NULL,
+   longueur_cm DECIMAL(15,3)   NOT NULL,
+   hauteur_cm DECIMAL(15,3)   NOT NULL,
+   actif BIT NOT NULL,
+   largeur_cm DECIMAL(15,3)   NOT NULL,
+   PRIMARY KEY(Id_article),
+   UNIQUE(sku)
+);
+
+CREATE TABLE site(
+   Id_site INT IDENTITY,
+   nom VARCHAR(255)  NOT NULL,
+   code_site VARCHAR(255)  NOT NULL,
+   Id_type_site INT NOT NULL,
+   PRIMARY KEY(Id_site),
+   FOREIGN KEY(Id_type_site) REFERENCES type_site(Id_type_site)
+);
+
+CREATE TABLE localisation(
+   Id_localisation INT IDENTITY,
+   code_localisation VARCHAR(255)  NOT NULL,
+   capacite_max INT,
+   Id_type_localisation INT NOT NULL,
+   Id_site INT NOT NULL,
+   PRIMARY KEY(Id_localisation),
+   FOREIGN KEY(Id_type_localisation) REFERENCES type_localisation(Id_type_localisation),
+   FOREIGN KEY(Id_site) REFERENCES site(Id_site)
+);
+
+CREATE TABLE stock(
+   Id_stock INT IDENTITY,
+   quantite INT NOT NULL,
+   date_maj DATETIME2 NOT NULL,
+   Id_localisation INT NOT NULL,
+   PRIMARY KEY(Id_stock),
+   FOREIGN KEY(Id_localisation) REFERENCES localisation(Id_localisation)
+);
+
+CREATE TABLE Mouvement(
+   Id_Mouvement INT IDENTITY,
+   quantite INT NOT NULL,
+   horodatage DATETIME2 NOT NULL,
+   reference_operation VARCHAR(255)  NOT NULL,
+   Id_site INT NOT NULL,
+   Id_type_mouvement INT NOT NULL,
+   PRIMARY KEY(Id_Mouvement),
+   UNIQUE(reference_operation),
+   FOREIGN KEY(Id_site) REFERENCES site(Id_site),
+   FOREIGN KEY(Id_type_mouvement) REFERENCES type_mouvement(Id_type_mouvement)
+);
+
+CREATE TABLE article_client(
+   Id_client INT,
+   Id_article INT,
+   PRIMARY KEY(Id_client, Id_article),
+   FOREIGN KEY(Id_client) REFERENCES client(Id_client),
+   FOREIGN KEY(Id_article) REFERENCES article(Id_article)
+);
+
+CREATE TABLE stock_article(
+   Id_article INT,
+   Id_stock INT,
+   PRIMARY KEY(Id_article, Id_stock),
+   FOREIGN KEY(Id_article) REFERENCES article(Id_article),
+   FOREIGN KEY(Id_stock) REFERENCES stock(Id_stock)
+);
