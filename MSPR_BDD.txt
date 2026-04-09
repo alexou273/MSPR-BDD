@@ -1,0 +1,107 @@
+Sub Create_Tables()
+
+DoCmd.RunSQL "CREATE TABLE type_mouvement(" & _
+   "Id_type_mouvement COUNTER," & _
+   "code VARCHAR(255) NOT NULL," & _
+   "libelle VARCHAR(255) NOT NULL," & _
+   "PRIMARY KEY(Id_type_mouvement)," & _
+   "UNIQUE(code)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE type_site(" & _
+   "Id_type_site COUNTER," & _
+   "code VARCHAR(50) NOT NULL," & _
+   "libelle VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(Id_type_site)," & _
+   "UNIQUE(code)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE type_localisation(" & _
+   "Id_type_localisation COUNTER," & _
+   "code VARCHAR(50) NOT NULL," & _
+   "libelle VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(Id_type_localisation)," & _
+   "UNIQUE(code)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE client(" & _
+   "Id_client COUNTER," & _
+   "nom VARCHAR(255) NOT NULL," & _
+   "code_client VARCHAR(255) NOT NULL," & _
+   "actif LOGICAL NOT NULL," & _
+   "PRIMARY KEY(Id_client)," & _
+   "UNIQUE(code_client)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE article(" & _
+   "Id_article COUNTER," & _
+   "sku VARCHAR(255) NOT NULL," & _
+   "designation VARCHAR(255)," & _
+   "poid_kg DECIMAL(15,3) NOT NULL," & _
+   "longueur_cm DECIMAL(15,3) NOT NULL," & _
+   "hauteur_cm DECIMAL(15,3) NOT NULL," & _
+   "actif LOGICAL NOT NULL," & _
+   "largeur_cm DECIMAL(15,3) NOT NULL," & _
+   "PRIMARY KEY(Id_article)," & _
+   "UNIQUE(sku)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE site(" & _
+   "Id_site COUNTER," & _
+   "nom VARCHAR(255) NOT NULL," & _
+   "code_site VARCHAR(255) NOT NULL," & _
+   "Id_type_site INT NOT NULL," & _
+   "PRIMARY KEY(Id_site)," & _
+   "FOREIGN KEY(Id_type_site) REFERENCES type_site(Id_type_site)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE localisation(" & _
+   "Id_localisation COUNTER," & _
+   "code_localisation VARCHAR(255) NOT NULL," & _
+   "capacite_max INT," & _
+   "Id_type_localisation INT NOT NULL," & _
+   "Id_site INT NOT NULL," & _
+   "PRIMARY KEY(Id_localisation)," & _
+   "FOREIGN KEY(Id_type_localisation) REFERENCES type_localisation(Id_type_localisation)," & _
+   "FOREIGN KEY(Id_site) REFERENCES site(Id_site)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE stock(" & _
+   "Id_stock COUNTER," & _
+   "quantite INT NOT NULL," & _
+   "date_maj DATETIME NOT NULL," & _
+   "Id_localisation INT NOT NULL," & _
+   "PRIMARY KEY(Id_stock)," & _
+   "FOREIGN KEY(Id_localisation) REFERENCES localisation(Id_localisation)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Mouvement(" & _
+   "Id_Mouvement COUNTER," & _
+   "quantite INT NOT NULL," & _
+   "horodatage DATETIME NOT NULL," & _
+   "reference_operation VARCHAR(255) NOT NULL," & _
+   "Id_site INT NOT NULL," & _
+   "Id_type_mouvement INT NOT NULL," & _
+   "PRIMARY KEY(Id_Mouvement)," & _
+   "UNIQUE(reference_operation)," & _
+   "FOREIGN KEY(Id_site) REFERENCES site(Id_site)," & _
+   "FOREIGN KEY(Id_type_mouvement) REFERENCES type_mouvement(Id_type_mouvement)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE article_client(" & _
+   "Id_client INT," & _
+   "Id_article INT," & _
+   "PRIMARY KEY(Id_client, Id_article)," & _
+   "FOREIGN KEY(Id_client) REFERENCES client(Id_client)," & _
+   "FOREIGN KEY(Id_article) REFERENCES article(Id_article)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE stock_article(" & _
+   "Id_article INT," & _
+   "Id_stock INT," & _
+   "PRIMARY KEY(Id_article, Id_stock)," & _
+   "FOREIGN KEY(Id_article) REFERENCES article(Id_article)," & _
+   "FOREIGN KEY(Id_stock) REFERENCES stock(Id_stock)" & _
+");"   
+
+End Sub
