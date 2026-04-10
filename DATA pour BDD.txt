@@ -1,7 +1,6 @@
 🟩 📌 RÉCAP COMPLET DE TOUT CE QUI A ÉTÉ REMPLI DANS LA BDD
 
 🟦 1) type_mouvement ✔️ COMPLET
-Tu as 3 types :
 ENTREE
 SORTIE
 TRANSFERT
