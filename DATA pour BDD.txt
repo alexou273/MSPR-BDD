@@ -76,18 +76,12 @@ Actuellement :
 - Sorties
 - Transferts
 
-
-
-
-Table : type_mouvement
+---------------------------------------------------
 
 INSERT INTO type_mouvement (code, libelle) VALUES
 ('ENTREE', 'Entrée en stock'),
 ('SORTIE', 'Sortie de stock'),
 ('TRANSFERT', 'Transfert interne');
-
-
-Table : type_site
 
 INSERT INTO type_site (code, libelle) VALUES
 ('ENTREPOT', 'Entrepôt principal'),
@@ -95,17 +89,11 @@ INSERT INTO type_site (code, libelle) VALUES
 ('PICKING', 'Zone de picking'),
 ('RESERVE', 'Zone de réserve');
 
-
-Table : type_localisation
-
 INSERT INTO type_localisation (code, libelle) VALUES
 ('PICK', 'Emplacement de picking'),
 ('RES', 'Emplacement de réserve'),
 ('QUAI', 'Emplacement de quai'),
 ('CROSSDOCK', 'Zone de crossdock');
-
-
-Table : site
 
 INSERT INTO site (nom, code_site, Id_type_site) VALUES
 ('Warehouse 1', 'WH1', 1),   -- ENTREPOT
@@ -113,10 +101,6 @@ INSERT INTO site (nom, code_site, Id_type_site) VALUES
 ('Crossdock', 'CDK', 2);     -- QUAI
 ('Warehouse 3', 'WH3', 1),   -- ENTREPOT
 ('Siège Social', 'SIEGE', 1); -- ENTREPOT
-
-
-
-Table : localisation
 
 -- WH1 (Id_site = 1)
 INSERT INTO localisation (code_localisation, capacite_max, Id_type_localisation, Id_site) VALUES
@@ -150,9 +134,6 @@ INSERT INTO localisation (code_localisation, capacite_max, Id_type_localisation,
 -- SIEGE (Id_site = 5)
 INSERT INTO localisation (code_localisation, capacite_max, Id_type_localisation, Id_site) VALUES
 ('SIEGE-01', 50, 1, 5);
-
-
-Table : client (100 clients)
 
 INSERT INTO client (nom, code_client, actif) VALUES
 ('Alpha Logistics', 'CLI001', 1),
@@ -255,9 +236,6 @@ INSERT INTO client (nom, code_client, actif) VALUES
 ('EverStar', 'CLI098', 1),
 ('BlueStar', 'CLI099', 1),
 ('UrbanStar', 'CLI100', 1);
-
-
-Table : article (200 articles)
 
 INSERT INTO article (sku, designation, poid_kg, longueur_cm, hauteur_cm, largeur_cm, actif) VALUES
 ('ART0001','Boîte carton S',0.250,20,10,15,1),
@@ -427,8 +405,6 @@ INSERT INTO article (sku, designation, poid_kg, longueur_cm, hauteur_cm, largeur
 ('ART0165','Oreiller mousse',0.800,60,20,40,1),
 ('ART0166','Oreiller mémoire forme',1.000,60,20,40,1);
 
-Table : article_client
-
 INSERT INTO article_client (Id_client, Id_article) VALUES
 (1,1),(2,2),(3,3),(4,4),(5,5),
 (6,6),(7,7),(8,8),(9,9),(10,10),
@@ -499,9 +475,6 @@ INSERT INTO article_client (Id_client, Id_article) VALUES
 (28,20),(28,42),(28,65),(28,115),(28,166),
 (29,23),(29,45),(29,71),(29,138),(29,150),
 (30,27),(30,49),(30,76),(30,149),(30,166);
-
-
-Table : stock
 
 -- Localisation 1 : A01-PICK
 INSERT INTO stock (quantite, date_maj, Id_localisation) VALUES
@@ -633,9 +606,6 @@ INSERT INTO stock (quantite, date_maj, Id_localisation) VALUES
 (30,'2025-08-02',18),
 (45,'2025-11-14',18);
 
-
-Table : stock_article
-
 INSERT INTO stock_article VALUES
 (12,1),(44,1),(78,1),(101,1),(133,1),
 (5,2),(33,2),(60,2),(95,2),(140,2),
@@ -731,8 +701,6 @@ INSERT INTO stock_article VALUES
 (9,75),(28,75),(52,75),(78,75),(150,75),
 
 (5,76),(17,76),(39,76),(61,76),(99,76);
-
-Table : mouvement
 
 INSERT INTO mouvement (quantite, horodatage, reference_operation, Id_site, Id_type_mouvement) VALUES
 (120,'2025-01-05','OP-2025-000001',1,1),
